@@ -3,6 +3,11 @@
 All notable changes to `@marocain/mcp-server` are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.1.3] — 2026-06-23
+
+### Added
+- New tool `semantic_search`: conceptual / vector search across the catalogue **and** the authored guides (Foreign Buyer's Playbook, Morocco-vs-Dubai thesis, AI-scoring methodology, residency, city theses). Hybrid retrieval (vector + full-text RRF). Forwards to `/api/public/semantic-search`. Moat-safe — never returns agent contact details.
+
 ## [0.1.2] — 2026-06-16
 
 ### Quality

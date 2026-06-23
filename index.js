@@ -138,12 +138,27 @@ const TOOLS = [
     },
     handler: (a) => apiGet(`/api/public/listing-derive${qs({ listing_id: a.listing_id, lang: a.lang ?? "en" })}`),
   },
+  {
+    name: "semantic_search",
+    description:
+      "Semantic / conceptual vector search across the Moroccan catalogue AND the authored guides (Foreign Buyer's Playbook, Morocco-vs-Dubai thesis, AI scoring methodology, residency, city theses). Use for fuzzy / lifestyle / thesis queries that don't map to exact filters — e.g. 'quiet authentic seaside neighbourhood with rental upside' or 'why Morocco over Dubai'. Returns ranked items with a similarity score. Never returns agent contact details.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        q: { type: "string", maxLength: 500, description: "Natural-language / conceptual query." },
+        types: { type: "string", maxLength: 100, description: "Optional comma-separated doc kinds to search: listing, district, investment, knowledge, essay." },
+        k: { type: "number", minimum: 1, maximum: 20, description: "Max results (default 8, max 20)." },
+      },
+      required: ["q"],
+    },
+    handler: (a) => apiGet(`/api/public/semantic-search${qs({ q: a.q, types: a.types, k: a.k ?? 8 })}`),
+  },
 ];
 
 const TOOL_BY_NAME = Object.fromEntries(TOOLS.map((t) => [t.name, t]));
 
 const server = new Server(
-  { name: "marocain-mcp-server", version: "0.1.0" },
+  { name: "marocain-mcp-server", version: "0.1.3" },
   { capabilities: { tools: {} } },
 );
 
