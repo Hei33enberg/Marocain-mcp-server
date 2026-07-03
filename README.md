@@ -66,7 +66,7 @@ Eleven tools — eight read-only analysis tools, a moat-safe enquiry tool, and t
 | Tool | What it does |
 |------|--------------|
 | `request_service` | Submit a buyer **enquiry** / request a viewing — routed on-platform to the listing's verified agent. Returns a reference, **never** any contact. |
-| `list_services` | The transactable **service catalogue** + EUR prices — buyer services (AI staging, viral content, reservation, appraiser, visitation, the €199 AI business plan, lawyer / financing / commercialization) and agent services (listing boost, photo relight). |
+| `list_services` | The transactable **service catalogue** + EUR prices — buyer services (AI staging, viral content, reservation, appraiser, visitation — note the live API `product_type` id is spelled `visaitation` — the €199 AI business plan, lawyer / financing / commercialization) and agent services (listing boost, photo relight). |
 | `order_service` | **Order** any service. Instant products return a Stripe `checkout_url` (pay on-platform); request-only products return a tracked `order_id`. Never returns contact. |
 
 > **Payments:** card checkout for *instant* products may be briefly unavailable while the platform reconnects its payment processor — request-based services and buyer enquiries work regardless. `order_service` reports this cleanly.
@@ -140,7 +140,7 @@ npm version patch        # or minor / major  (edits package.json)
 git push --follow-tags
 ```
 
-Local `npm test` runs the unit tests + the black-box MCP handshake smoke on Node 18 / 20 / 22.
+Local `npm test` runs the unit tests (CI runs them on Node 18/20/22); CI additionally runs the black-box MCP handshake smoke (`node test/smoke.mjs`) on Node 20.
 
 ## License
 
