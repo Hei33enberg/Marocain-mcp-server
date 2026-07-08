@@ -3,6 +3,16 @@
 All notable changes to `@marocain/mcp-server` are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.1.7] — 2026-07-08
+
+### Security (defense-in-depth)
+- Every tool output now passes through a central `stripMoat()` at the dispatch
+  layer — recursively removes the moat-bypass fields (`source_url`,
+  `source_listing_id`, `source_aliases`, `agent_name`, `agency_name`) from ALL
+  11 tools, not just `search_listings`/`get_listing`. The real gate is still
+  server-side; this second layer means a future upstream regression can't leak
+  those fields through the MCP. Idempotent — listing `enquire` pointers preserved.
+
 ## [0.1.6] — 2026-06-23
 
 ### Added (commerce — buyer & agent paid services)

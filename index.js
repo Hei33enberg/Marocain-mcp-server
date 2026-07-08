@@ -91,6 +91,23 @@ async function apiPost(path, payload) {
 // the origin-portal deep link + the agent/agency identity. Keeps the `source` NAME
 // (provenance) but not the actionable link. Adds an enquiry pointer.
 const MOAT_STRIP = ["source_url", "source_listing_id", "source_aliases", "agent_name", "agency_name"];
+// Defense-in-depth: recursively strip moat fields from ANY tool output (no
+// enquire injection — that's redactListing's job for listing tools). The real
+// gate is server-side, but this second layer means a future upstream regression
+// that started emitting source_url etc. still couldn't leak through the MCP.
+// Idempotent over already-redacted listing payloads (keys already gone; enquire
+// is preserved).
+function stripMoat(node) {
+  if (!node || typeof node !== "object") return node;
+  if (Array.isArray(node)) return node.map(stripMoat);
+  const out = { ...node };
+  for (const k of MOAT_STRIP) if (k in out) delete out[k];
+  for (const key of Object.keys(out)) {
+    if (out[key] && typeof out[key] === "object") out[key] = stripMoat(out[key]);
+  }
+  return out;
+}
+
 function redactListing(node) {
   if (!node || typeof node !== "object") return node;
   if (Array.isArray(node)) return node.map(redactListing);
@@ -322,7 +339,7 @@ const TOOLS = [
 const TOOL_BY_NAME = Object.fromEntries(TOOLS.map((t) => [t.name, t]));
 
 const server = new Server(
-  { name: "marocain-mcp-server", version: "0.1.6" },
+  { name: "marocain-mcp-server", version: "0.1.7" },
   { capabilities: { tools: {} } },
 );
 
@@ -336,7 +353,7 @@ server.setRequestHandler(CallToolRequestSchema, async (req) => {
     return { isError: true, content: [{ type: "text", text: `Unknown tool: ${req.params.name}` }] };
   }
   try {
-    const result = await tool.handler(req.params.arguments ?? {});
+    const result = stripMoat(await tool.handler(req.params.arguments ?? {}));
     return { content: [{ type: "text", text: JSON.stringify(result, null, 2) }] };
   } catch (err) {
     return { isError: true, content: [{ type: "text", text: `Error: ${err?.message ?? String(err)}` }] };
