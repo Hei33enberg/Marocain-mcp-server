@@ -3,6 +3,12 @@
 All notable changes to `@marocain/mcp-server` are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.1.9] — 2026-07-09
+
+### Fixed
+- MCP Registry namespace case — `mcpName` / `server.json` name → `io.github.Hei33enberg/…`
+  (the Registry namespace is case-sensitive and must match the GitHub owner login).
+
 ## [0.1.8] — 2026-07-09
 
 ### Distribution (promotion — no tool/behaviour changes)

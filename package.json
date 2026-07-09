@@ -1,7 +1,7 @@
 {
   "name": "@marocain/mcp-server",
-  "version": "0.1.8",
-  "mcpName": "io.github.hei33enberg/marocain-mcp-server",
+  "version": "0.1.9",
+  "mcpName": "io.github.Hei33enberg/marocain-mcp-server",
   "description": "Model Context Protocol server for marocain.investments — the {GIN} authored real-estate intelligence (scoring verdict, M-Value, market facts, derived memos) for Morocco. Moat-safe: never exposes agent contact details.",
   "type": "module",
   "bin": {

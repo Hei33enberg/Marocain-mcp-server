@@ -1,19 +1,19 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
-  "name": "io.github.hei33enberg/marocain-mcp-server",
+  "name": "io.github.Hei33enberg/marocain-mcp-server",
   "title": "marocain.investments — {GIN} real-estate intelligence (Morocco)",
   "description": "{GIN} verdict, M-Value AVM, market facts + semantic search for Moroccan real estate. Moat-safe.",
   "repository": {
     "url": "https://github.com/Hei33enberg/marocain-mcp-server",
     "source": "github"
   },
-  "version": "0.1.8",
+  "version": "0.1.9",
   "packages": [
     {
       "registryType": "npm",
       "registryBaseUrl": "https://registry.npmjs.org",
       "identifier": "@marocain/mcp-server",
-      "version": "0.1.8",
+      "version": "0.1.9",
       "transport": {
         "type": "stdio"
       }
