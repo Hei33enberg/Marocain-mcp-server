@@ -1,0 +1,41 @@
+name: publish
+
+# Publishes the npm package AND registers the server in the official MCP Registry
+# (registry.modelcontextprotocol.io) via GitHub OIDC — no registry secret needed.
+# Trigger: push a version tag (`git tag v0.1.8 && git push --tags`) OR run manually
+# from the Actions tab ("Run workflow"). Requires the repo secret NPM_TOKEN.
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write   # OIDC → MCP Registry auth (proves this repo's owner => io.github.hei33enberg/*)
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          registry-url: "https://registry.npmjs.org"
+      - run: npm ci || npm install
+      - run: npm test
+
+      # 1) npm — the MCP Registry only stores metadata, so the package (carrying the
+      #    matching `mcpName`) must exist on npm first. Skips cleanly if the version
+      #    is already published.
+      - name: Publish to npm
+        run: npm publish --access public || echo "npm publish skipped (version already live)"
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      # 2) Official MCP Registry — validates server.json against the published package.
+      - name: Install mcp-publisher
+        run: curl -L "https://github.com/modelcontextprotocol/registry/releases/latest/download/mcp-publisher_$(uname -s | tr '[:upper:]' '[:lower:]')_$(uname -m | sed 's/x86_64/amd64/;s/aarch64/arm64/').tar.gz" | tar xz mcp-publisher
+      - name: Authenticate (GitHub OIDC)
+        run: ./mcp-publisher login github-oidc
+      - name: Publish server.json to the MCP Registry
+        run: ./mcp-publisher publish

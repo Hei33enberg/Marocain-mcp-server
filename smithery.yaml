@@ -1,0 +1,11 @@
+# Smithery listing config — https://smithery.ai/docs/build/project-config/smithery.yaml
+# A pre-existing stdio MCP server distributed via npm. No build step, no config,
+# no secrets (all {GIN} analysis is free + moat-safe; contact is intermediated).
+startCommand:
+  type: stdio
+  configSchema:
+    type: object
+    properties: {}
+    additionalProperties: false
+  commandFunction: |
+    (config) => ({ command: 'npx', args: ['-y', '@marocain/mcp-server'] })

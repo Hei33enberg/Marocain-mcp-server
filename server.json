@@ -1,0 +1,22 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.hei33enberg/marocain-mcp-server",
+  "title": "marocain.investments — {GIN} real-estate intelligence (Morocco)",
+  "description": "MCP server for marocain.investments — {GIN} authored real-estate intelligence for Morocco: scoring verdict (Quality + Deal), M-Value AVM, market facts, derived investor memos and semantic search over live luxury listings. Moat-safe: never exposes agent contact details or origin-portal links.",
+  "repository": {
+    "url": "https://github.com/Hei33enberg/marocain-mcp-server",
+    "source": "github"
+  },
+  "version": "0.1.8",
+  "packages": [
+    {
+      "registryType": "npm",
+      "registryBaseUrl": "https://registry.npmjs.org",
+      "identifier": "@marocain/mcp-server",
+      "version": "0.1.8",
+      "transport": {
+        "type": "stdio"
+      }
+    }
+  ]
+}
