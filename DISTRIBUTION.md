@@ -18,8 +18,10 @@ The canonical meta-registry many clients read. Everything is prepared:
   **GitHub OIDC** (no registry token needed).
 
 **To publish (owner):**
-1. Confirm the repo secret **`NPM_TOKEN`** exists (Settings → Secrets → Actions). If
-   not, create an npm automation token and add it.
+1. ⚠️ **Add the `NPM_TOKEN` secret to THIS repo** (Settings → Secrets and variables →
+   Actions → New repository secret, name `NPM_TOKEN`). It currently lives in the
+   `marocain-main` repo but NOT here, so the workflow's npm step no-ops without it.
+   Secrets are per-repo and write-only, so it can't be copied programmatically.
 2. Either push a tag — `git tag v0.1.8 && git push origin v0.1.8` — **or** open the
    Actions tab → "publish" → **Run workflow**.
 3. Verify: `curl "https://registry.modelcontextprotocol.io/v0.1/servers?search=marocain"`.
