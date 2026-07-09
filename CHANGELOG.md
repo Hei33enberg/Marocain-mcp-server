@@ -3,6 +3,14 @@
 All notable changes to `@marocain/mcp-server` are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.1.8] — 2026-07-09
+
+### Distribution (promotion — no tool/behaviour changes)
+- Registry metadata for public discovery: `mcpName` in `package.json`, `server.json`
+  (official MCP Registry manifest, schema 2025-12-11), `smithery.yaml`, `glama.json`.
+- `publish` workflow — tag `v*` / manual dispatch publishes npm **and** registers the
+  server in the official MCP Registry via GitHub OIDC.
+
 ## [0.1.7] — 2026-07-08
 
 ### Security (defense-in-depth)
