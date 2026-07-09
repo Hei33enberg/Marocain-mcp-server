@@ -24,11 +24,21 @@ jobs:
       - run: npm ci || npm install
       - run: npm test
 
+      # Preflight: fail LOUDLY with a clear message if the token is missing, instead
+      # of a masked ENEEDAUTH deep in the npm step.
+      - name: Check NPM_TOKEN is set
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          if [ -z "$NPM_TOKEN" ]; then
+            echo "::error::NPM_TOKEN secret is not set in THIS repo. Add it under Settings → Secrets and variables → Actions → New repository secret (name: NPM_TOKEN), then re-run."
+            exit 1
+          fi
+
       # 1) npm — the MCP Registry only stores metadata, so the package (carrying the
-      #    matching `mcpName`) must exist on npm first. Skips cleanly if the version
-      #    is already published.
+      #    matching `mcpName`) must exist on npm first.
       - name: Publish to npm
-        run: npm publish --access public || echo "npm publish skipped (version already live)"
+        run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
