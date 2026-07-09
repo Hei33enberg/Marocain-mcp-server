@@ -50,12 +50,10 @@ Community directory. Submit at **mcp.so/submit** with:
 - Tools: search_listings, get_listing, get_gin_score, get_market, listing_derive, semantic_search
 - One-liner: "AI-graded Moroccan luxury real estate — honest {GIN} verdict, M-Value AVM, market facts. Moat-safe."
 
-## 6. modelcontextprotocol/servers community list — ⚪ PR
-Add a line to the "Community Servers" section of
-`github.com/modelcontextprotocol/servers` (alphabetical). Suggested entry:
-```
-- **[marocain.investments](https://github.com/Hei33enberg/marocain-mcp-server)** – {GIN} real-estate intelligence for Morocco: scoring verdict, M-Value AVM, market facts, semantic search. Moat-safe.
-```
+## 6. modelcontextprotocol/servers community list — ❌ RETIRED (nothing to do)
+That README's third-party server list has been **retired in favour of the official
+MCP Registry** (per their CONTRIBUTING.md — "publish it there instead"). We're already
+in the Registry (#2 ✅), which is exactly where they redirect. No PR to open.
 
 ## 7. On-site advertising — ✅ live
 Already advertised from the domain (AI crawlers + agents read these):
