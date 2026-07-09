@@ -19,9 +19,12 @@ The canonical meta-registry many clients read. Everything is prepared:
 
 **To publish (owner):**
 1. ⚠️ **Add the `NPM_TOKEN` secret to THIS repo** (Settings → Secrets and variables →
-   Actions → New repository secret, name `NPM_TOKEN`). It currently lives in the
-   `marocain-main` repo but NOT here, so the workflow's npm step no-ops without it.
-   Secrets are per-repo and write-only, so it can't be copied programmatically.
+   Actions → New repository secret, name `NPM_TOKEN`). Secrets are per-repo and
+   write-only, so it can't be copied from `marocain-main` programmatically.
+   **The token MUST bypass npm 2FA** — the `@marocain` account enforces 2FA on
+   publish, so a classic *Publish* token 403s ("bypass 2fa required"). Generate on
+   npmjs.com → **Access Tokens → Classic → "Automation"** (simplest, bypasses 2FA)
+   OR a **Granular** token with *Read and write* on the `@marocain` scope.
 2. Either push a tag — `git tag v0.1.8 && git push origin v0.1.8` — **or** open the
    Actions tab → "publish" → **Run workflow**.
 3. Verify: `curl "https://registry.modelcontextprotocol.io/v0.1/servers?search=marocain"`.
